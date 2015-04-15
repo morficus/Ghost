@@ -10,7 +10,14 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 var App = Ember.Application.extend({
     modulePrefix: config.modulePrefix,
     podModulePrefix: config.podModulePrefix,
-    Resolver: Resolver
+    Resolver: Resolver,
+    ready: function () {
+
+        var language = navigator.language || navigator.browserLanguage;
+        //TODO: need to figure out how to set this dynamically based on blog setting
+        this.intl.set('locales', [language, 'hu-HU', 'es', 'en']);
+
+    }
 });
 
 loadInitializers(App, config.modulePrefix);

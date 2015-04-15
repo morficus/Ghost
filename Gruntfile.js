@@ -446,6 +446,19 @@ var _              = require('lodash'),
                         params: '--init'
                     }
                 }
+            },
+
+            // ### transifex_keyvaluejson
+            // download translation strings from Transifex
+            transifex_keyvaluejson: {
+                admin: {
+                    options: {
+                        project: 'ghost-test-project',
+                        resource: 'ghost-admin-poc',
+                        dest: '/core/client/translations'
+                    }
+                }
+
             }
         };
 
@@ -877,6 +890,9 @@ var _              = require('lodash'),
         // `grunt init --verbose` to see if there are any errors.
         grunt.registerTask('init', 'Prepare the project for development',
             ['shell:ember:init', 'shell:bower', 'update_submodules', 'assets', 'default']);
+
+        grunt.registerTask('i18n', 'Get translation strings for all avialble locales',
+            ['transifex_keyvaluejson:admin']);
 
         // ### Basic Asset Building
         // Builds and moves necessary client assets. Prod additionally builds the ember app.

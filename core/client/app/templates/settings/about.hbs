@@ -1,6 +1,6 @@
 <header class="settings-view-header">
-    {{#link-to "settings" class="btn btn-default btn-back"}}Back{{/link-to}}
-    <h2 class="page-title">About</h2>
+    {{#link-to "settings" class="btn btn-default btn-back"}}{{format-message (intl-get "common.back")}}{{/link-to}}
+    <h2 class="page-title">{{format-message (intl-get "settings.about.title")}}</h2>
 </header>
 
 <section class="content settings-about">
@@ -11,41 +11,55 @@
             </span>
             <span class="version blue">v{{model.version}}</span>
         </h1>
-        {{gh-notifications location="settings-about-upgrade" notify="updateNotificationChange"}}
-        {{#unless updateNotificationCount}}
-            <p>A free, open, simple publishing platform</p>
-        {{/unless}}
 
+    {{gh-notifications location="settings-about-upgrade" notify="updateNotificationChange"}}
+    {{#unless updateNotificationCount}}
+            <p>{{format-message (intl-get "common.slogan")}}</p>
+    {{/unless}}
+
+<p>
+    <strong>This is a pluralization sample: </strong>{{format-message (intl-get "pluralSample") numPost=8 currentDate=1430700266792 }}
+</p>
         <div class="about-environment-help clearfix">
             <div class="about-environment">
                 <dl>
-                    <dt>Version:</dt>
+                    <dt>{{format-message (intl-get "settings.about.version")}}:</dt>
                     <dd class="about-environment-detail">{{model.version}}</dd>
-                    <dt>Environment:</dt>
+                    <dt>{{format-message (intl-get "settings.about.environment")}}:</dt>
                     <dd class="about-environment-detail">{{model.environment}}</dd>
-                    <dt>Database:</dt>
+                    <dt>{{format-message (intl-get "settings.about.database")}}:</dt>
                     <dd class="about-environment-detail about-environment-database">{{model.database}}</dd>
-                    <dt>Mail:</dt>
-                    <dd class="about-environment-detail">{{#if model.mail}}{{model.mail}}{{else}}Native{{/if}}</dd>
+                    <dt>{{format-message (intl-get "settings.about.mail")}}:</dt>
+                    <dd class="about-environment-detail">{{#if model.mail}}{{model.mail}}{{else}}{{format-message (intl-get "settings.about.native")}}{{/if}}</dd>
                 </dl>
             </div>
             <div class="about-help">
-                <a href="http://support.ghost.org" class="btn">User Documentation</a>
-                <a href="https://ghost.org/slack/" class="btn">Get Help With Ghost</a>
+
+                <a href="http://support.ghost.org" class="btn">
+                    {{format-message (intl-get "settings.about.userDocumentation")}}
+                </a>
+                <a href="https://ghost.org/forum/" class="btn">
+                    {{format-message (intl-get "settings.about.getHelp")}}
+                </a>
+
             </div>
         </div>
     </section>
 
     <section class="about-credits">
-        <h1>The People Who Made it Possible</h1>
+        <h1>{{format-message (intl-get "settings.about.thePeople" name="Maurice")}}</h1>
 
         <ul class="top-contributors clearfix">
-            {{partial "contributors"}}
+            {{ partial "contributors" }}
         </ul>
 
-        <p class="about-contributors-info">Ghost is built by an incredible group of contributors from all over the world. Here are just a few of the people who helped create the version you’re using right now.</p>
+        <p class="about-contributors-info">
+            {{format-message (intl-get "settings.about.incredibleGroupOfContributors")}}
+        </p>
 
-        <a href="https://ghost.org/about/contribute/" class="about-get-involved btn-blue btn-lg btn">Find out how you can get involved</a>
+        <a href="https://ghost.org/about/contribute/" class="about-get-involved btn-blue btn-lg btn">
+            {{format-message (intl-get "settings.about.howToGetInvolved")}}
+        </a>
 
         <p class="about-copyright">
             Copyright 2013 - 2015 Ghost Foundation, released under the <a href="https://github.com/TryGhost/Ghost/blob/master/LICENSE">MIT license</a>.

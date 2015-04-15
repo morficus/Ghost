@@ -1,20 +1,20 @@
 <nav class="global-nav" role="navigation">
 
-    <a class="nav-item ghost-logo" href="{{gh-path 'blog'}}" title="Visit blog">
-        <div class="nav-label"><i class="icon-ghost"></i> <span>Visit blog</span> </div>
+    <a class="nav-item ghost-logo" href="{{gh-path 'blog'}}" title="{{format-message (intl-get "navigation.visitBlog")}}">
+        <div class="nav-label"><i class="icon-ghost"></i> <span>{{format-message (intl-get "navigation.visitBlog")}}</span> </div>
     </a>
 
     {{#link-to "posts" classNames="nav-item nav-content js-nav-item"}}
-        <div class="nav-label"><i class="icon-content"></i> Content</div>
+        <div class="nav-label"><i class="icon-content"></i> {{format-message (intl-get "navigation.content")}}</div>
     {{/link-to}}
 
     {{#link-to "editor.new" classNames="nav-item nav-new js-nav-item"}}
-        <div class="nav-label"><i class="icon-add"></i> New Post</div>
+        <div class="nav-label"><i class="icon-add"></i> {{format-message (intl-get "navigation.newPost")}}</div>
     {{/link-to}}
 
     {{#unless session.user.isAuthor}}
     {{#link-to "settings" classNames="nav-item nav-settings js-nav-item"}}
-        <div class="nav-label"><i class="icon-settings2"></i> Settings</div>
+        <div class="nav-label"><i class="icon-settings2"></i> {{format-message (intl-get "navigation.settings")}}</div>
     {{/link-to}}
     {{/unless}}
 
@@ -41,9 +41,9 @@
         {{/gh-dropdown-button}}
         {{#gh-dropdown tagName="div" classNames="dropdown" name="user-menu" closeOnClick="true"}}
             <ul class="dropdown-menu dropdown-triangle-top-right js-user-menu-dropdown-menu" role="menu">
-                <li role="presentation">{{#link-to "settings.users.user" session.user.slug classNames="dropdown-item user-menu-profile js-nav-item" role="menuitem" tabindex="-1"}}<i class="icon-user"></i> Your Profile{{/link-to}}</li>
+                <li role="presentation">{{#link-to "settings.users.user" session.user.slug classNames="dropdown-item user-menu-profile js-nav-item" role="menuitem" tabindex="-1"}}<i class="icon-user"></i> {{format-message (intl-get "navigation.yourProfile")}}{{/link-to}}</li>
                 <li class="divider"></li>
-                <li role="presentation">{{#link-to "signout" classNames="dropdown-item user-menu-signout" role="menuitem" tabindex="-1"}}<i class="icon-power"></i> Sign Out{{/link-to}}</li>
+                <li role="presentation">{{#link-to "signout" classNames="dropdown-item user-menu-signout" role="menuitem" tabindex="-1"}}<i class="icon-power"></i> {{format-message (intl-get "navigation.signOut")}}{{/link-to}}</li>
             </ul>
         {{/gh-dropdown}}
     </div>{{! .user-menu }}
