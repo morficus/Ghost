@@ -10,7 +10,16 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 var App = Ember.Application.extend({
     modulePrefix: config.modulePrefix,
     podModulePrefix: config.podModulePrefix,
-    Resolver: Resolver
+    Resolver: Resolver,
+    ready: function () {
+        var language = navigator.language || navigator.browserLanguage;
+        this.intl.set('locales', ['en']);
+
+        this.intl.addMessages('en', {
+            "slogan": "run-time value"
+
+        })
+    }
 });
 
 loadInitializers(App, config.modulePrefix);

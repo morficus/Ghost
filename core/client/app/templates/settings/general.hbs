@@ -2,7 +2,10 @@
     {{#link-to "settings" class="btn btn-default btn-back"}}Back{{/link-to}}
     <h2 class="page-title">General</h2>
     <section class="page-actions">
-        <button type="button" class="btn btn-blue" {{action "save"}}>Save</button>
+        <button type="button" class="btn btn-blue" {{action "save"}}>Save
+        {{format-message (intl-get "messages.greeting")}}
+
+        </button>
     </section>
 </header>
 
