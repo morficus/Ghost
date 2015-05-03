@@ -446,6 +446,19 @@ var _              = require('lodash'),
                         params: '--init'
                     }
                 }
+            },
+
+            // ### transifex_keyvaluejson
+            // download translation strings from Transifex
+            transifex_keyvaluejson: {
+                admin: {
+                    options: {
+                        project: 'ghost-test-project',
+                        resource: 'ghost-poc',
+                        dest: '/core/client/translations'
+                    }
+                }
+
             }
         };
 
@@ -909,7 +922,7 @@ var _              = require('lodash'),
         //
         // Note that the current implementation of watch only works with casper, not other themes.
         grunt.registerTask('dev', 'Dev Mode; watch files and restart server on changes',
-           ['bgShell:ember', 'express:dev', 'watch']);
+           ['transifex_keyvaluejson:admin', 'bgShell:ember', 'express:dev', 'watch']);
 
         // ### Release
         // Run `grunt release` to create a Ghost release zip file.

@@ -12,13 +12,11 @@ var App = Ember.Application.extend({
     podModulePrefix: config.podModulePrefix,
     Resolver: Resolver,
     ready: function () {
+
         var language = navigator.language || navigator.browserLanguage;
-        this.intl.set('locales', ['en']);
+        //TODO: need to figure out how to set this dynamically based on blog setting
+        this.intl.set('locales', [language, 'hu_HU', 'es', 'en']);
 
-        this.intl.addMessages('en', {
-            "slogan": "run-time value"
-
-        })
     }
 });
 
