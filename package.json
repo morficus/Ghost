@@ -89,7 +89,7 @@
     "grunt-mocha-cli": "~1.13.0",
     "grunt-mocha-istanbul": "2.4.0",
     "grunt-shell": "~1.1.1",
-    "grunt-transifex-keyvaluejson": "0.0.1",
+    "grunt-transifex-keyvaluejson": "0.0.2",
     "grunt-update-submodules": "~0.4.1",
     "matchdep": "~0.3.0",
     "nock": "0.52.4",
