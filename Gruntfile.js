@@ -454,7 +454,7 @@ var _              = require('lodash'),
                 admin: {
                     options: {
                         project: 'ghost-test-project',
-                        resource: 'ghost-poc',
+                        resource: 'ghost-admin-poc',
                         dest: '/core/client/translations'
                     }
                 }
