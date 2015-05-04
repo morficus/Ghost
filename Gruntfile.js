@@ -891,6 +891,9 @@ var _              = require('lodash'),
         grunt.registerTask('init', 'Prepare the project for development',
             ['shell:ember:init', 'shell:bower', 'update_submodules', 'assets', 'default']);
 
+        grunt.registerTask('i18n', 'Get translation strings for all avialble locales',
+            ['transifex_keyvaluejson:admin']);
+
         // ### Basic Asset Building
         // Builds and moves necessary client assets. Prod additionally builds the ember app.
         grunt.registerTask('assets', 'Basic asset building & moving',
@@ -922,7 +925,7 @@ var _              = require('lodash'),
         //
         // Note that the current implementation of watch only works with casper, not other themes.
         grunt.registerTask('dev', 'Dev Mode; watch files and restart server on changes',
-           ['transifex_keyvaluejson:admin', 'bgShell:ember', 'express:dev', 'watch']);
+           ['bgShell:ember', 'express:dev', 'watch']);
 
         // ### Release
         // Run `grunt release` to create a Ghost release zip file.
