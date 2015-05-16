@@ -457,6 +457,13 @@ var _              = require('lodash'),
                         resource: 'ghost-admin-poc',
                         dest: '/core/client/translations'
                     }
+                },
+                server: {
+                    options: {
+                        project: 'ghost-test-project',
+                        resource: 'ghost-server-poc',
+                        dest: '/core/server/translations'
+                    }
                 }
 
             }

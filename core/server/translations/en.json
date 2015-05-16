@@ -1,0 +1,15 @@
+{
+    "errors": {
+        "init": {
+            "jsNotBuilt": "Javascript files have not been built.",
+            "readInstructions": "\nPlease read the getting started instructions at:\n {url}"
+        }
+    },
+    "notifications": {
+        "init": {
+            "welcome": "Welcome to Ghost. You're running under the <strong>{environment}</strong>. Your URL is set to {ghostUrl}. See {helpUrl} for instructions.",
+            "directEmailService": "Ghost is attempting to use a direct method to send e-mail. It is recommended that you explicitly configure an e-mail service. See {url} for instructions",
+            "unableToSendEmail": "Ghost is currently unable to send e-mail. See {url} for instructions."
+        }
+    }
+}
