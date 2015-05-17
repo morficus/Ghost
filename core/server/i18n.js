@@ -14,9 +14,23 @@ I18n = {
     t: function (path, context) {
 
         var string = I18n.getString(path),
-            msg = new MessageFormat(string, currentLocale);
+            msg;
 
-        return msg.format(context);
+        // If the given path returns an array (as in the case with emails), then loop through them and return an array
+        // of translated/formatted strings. Otherwise, just return the normal translated/formatted string.
+        if (_.isArray(string)) {
+            msg = [];
+            string.forEach(function (s) {
+                var m = new MessageFormat(s, currentLocale);
+
+                msg.push(m.format(context));
+            });
+        } else {
+            msg = new MessageFormat(string, currentLocale);
+            msg = msg.format(context);
+        }
+
+        return msg;
     },
 
     /**
@@ -41,6 +55,10 @@ I18n = {
             // reassign matching object, or set to an empty string if there is no match
             matchingString = matchingString[key] || '';
         });
+
+        /*if (_.isArray(matchingString)) {
+            matchingString = matchingString.join(' ');
+        }*/
 
         return matchingString;
     },
