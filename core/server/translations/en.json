@@ -24,10 +24,10 @@
         ],
         "invite-user": [
             "Welcome",
-            "<strong>{{blogName}}</strong> is using Ghost to publish things on the internet! {{invitedByName}} has invited you to join. Please click on the link below to activate your account.",
-            "<a href=\"{{resetLink}}\">Click here to activate your account</a>",
+            "<strong>{blogName}</strong> is using Ghost to publish things on the internet! {invitedByName} has invited you to join. Please click on the link below to activate your account.",
+            "<a href=\"{resetLink}\">Click here to activate your account</a>",
             "<strong>No idea what Ghost is?</strong> It's a simple, beautiful platform for running an online blog or publication. Writers, businesses and individuals from all over the world use Ghost to publish their stories and ideas. <a href=\"http://ghost.org\">Find out more</a>.",
-            "If you have trouble activating your {{blogName}} account, you can reach out to {{invitedByName}} on {{invitedByEmail}} for assistance.",
+            "If you have trouble activating your {blogName} account, you can reach out to {invitedByName} on {invitedByEmail} for assistance.",
             "Have fun, and good luck!"
         ],
         "reset-password": [
