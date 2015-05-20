@@ -1,6 +1,16 @@
 {
-    "slogan": "A free, open, simple publishing platform",
-    "back": "Back",
+    "common": {
+        "slogan": "A free, open, simple publishing platform",
+        "back": "Back"
+    },
+    "navigation": {
+        "visitBlog": "Visit blog",
+        "content": "Content",
+        "newPost": "New Post",
+        "settings": "Settings",
+        "yourProfile": "Your Profile",
+        "signOut": "Sign Out"
+    },
     "pluralSample": "As of {currentDate, date, long} there are {numPost, plural, =0 {no posts} =1 {post} other {# posts} } avilable in this blog.",
     "settings": {
         "about": {
