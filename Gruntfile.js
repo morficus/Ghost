@@ -899,7 +899,7 @@ var _              = require('lodash'),
             ['shell:ember:init', 'shell:bower', 'update_submodules', 'assets', 'default']);
 
         grunt.registerTask('i18n', 'Get translation strings for all avialble locales',
-            ['transifex_keyvaluejson:admin']);
+            ['transifex_keyvaluejson:admin', 'transifex_keyvaluejson:server']);
 
         // ### Basic Asset Building
         // Builds and moves necessary client assets. Prod additionally builds the ember app.
