@@ -3,7 +3,7 @@ var localesMyAppSupports = [
     ],
     _               = require('lodash'),
     //TODO: fetch this dynamically based on overall blog settings (`key = "defaultLang"` in the `settings` table
-    currentLocale   = 'en',
+    currentLocale   = 'es',
     fs              = require('fs'),
     MessageFormat   = require('intl-messageformat'),
     I18n;
