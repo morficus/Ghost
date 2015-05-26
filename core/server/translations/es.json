@@ -1,0 +1,47 @@
+{
+    "errors": {
+        "init": {
+            "jsNotBuilt": "Javascript files have not been built.",
+            "readInstructions": "Porfavor lee las instrucciones de como empezar aquí:\n{url}"
+        }
+    },
+    "notifications": {
+        "init": {
+            "welcome": "Bienvenido a Ghost. Estas operando en el entorno de <strong>{environment}</strong>. Tu URL es {ghostUrl}. Dirígete a {helpUrl} para mas instrucciones.",
+            "directEmailService": "Ghost esta intentando utilizar un método directo de enviar e-mail. Se recomienda que explícitamente configures un servicio de e-mail. Vea {url} para instrucciones.",
+            "unableToSendEmail": "En este momento Ghost no puede enviar e-mails. Vea {url} para instrucciones."
+        }
+    },
+    "emails": {
+        "welcome": [
+            "<strong>¡Hola!</strong>",
+            "Buenas noticias! Has creado exitosamente un nuevo blog de Ghost en {siteUrl}",
+            "Puedes entrar a tu cuenta administrative con los siguientes detalles:",
+            "Dirección de correo: {ownerEmail} <br> Contraseña: La contraseña que elegiste",
+            "¡Mantén este correo en un lugar seguro para futuras referencias, y diviértete!",
+            "xoxo",
+            "El equipo de Ghost <br> <a href=\"https://ghost.org\">https://ghost.org</a>"
+        ],
+        "invite-user": [
+            "Bienvenido",
+            "<strong>{{blogName}}</strong> is using Ghost to publish things on the internet! {{invitedByName}} has invited you to join. Please click on the link below to activate your account.",
+            "<a href=\"{{resetLink}}\">Dale click aquí para activar to cuenta</a>",
+            "<strong>¿Ni idea qué es Ghost?</strong> Es una plataforma simple y hermosa para mantener un blog u otra publicación en linea. Escritores, compañías e individuos de todas partes del mundo utilizan Ghost para public sus historias e ideas.  <a href=\"http://ghost.org\">Saber mas</a>.",
+            "Si estas teniendo problemas activando tu cuenta de {{blogName}}, puedes contactar a {{invitedByName}} al correo {{invitedByEmail}} para asistencia.",
+            "¡Diviertete, y buena suerte!"
+        ],
+        "reset-password": [
+            "<strong>Hola!</strong>",
+            "Se ha hecho una solicitud para cambiar to contraseña en <a href=\"{siteUrl}\">{siteUrl}</a>.",
+            "Utiliza el link que esta abajo para cambiar tu contraseña: <br><br><a href=\"{resetUrl}\">Has click aquí para cambiar to contraseña</a>",
+            "Ghost"
+        ],
+        "test": [
+            "<strong>¡Hola!</strong>",
+            "¡Excelente! Has exitosamente configurado tu servicio de correo para Ghost en {siteUrl}",
+            "Si no, no estarías leyendo este email. Pero lo estas leyendo, así que todo resultó bien :-)",
+            "xoxo",
+            "El equipo de Ghost <br> <a href=\"https://ghost.org\">https://ghost.org</a>"
+        ]
+    }
+}

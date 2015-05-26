@@ -1,5 +1,5 @@
 var localesMyAppSupports = [
-    'en', 'en-US', 'es', 'hu-HU'
+    'en', 'es'
     ],
     _               = require('lodash'),
     //TODO: fetch this dynamically based on overall blog settings (`key = "defaultLang"` in the `settings` table

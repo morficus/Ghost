@@ -1,0 +1,30 @@
+{
+    "common": {
+        "slogan": "Una plataforma de publicación gratis, abierta y simple",
+        "back": "Regresar"
+    },
+    "navigation": {
+        "visitBlog": "Visita el blog",
+        "content": "Contenido",
+        "newPost": "Artículo nuevo",
+        "settings": "Configuración",
+        "yourProfile": "Tu Perfil",
+        "signOut": "Cerrar sessión"
+    },
+    "pluralSample": "Desde el {currentDate, date, long}, {numPost, plural, =0 {ningún artículo esta } =1 {un articulo esta} other {# artículos están} } en este blog.",
+    "settings": {
+        "about": {
+            "title": "Acerca de Ghost",
+            "version": "Versión",
+            "environment": "Entorno",
+            "database": "Base de Datos",
+            "mail": "Correo",
+            "native": "Nativo",
+            "userDocumentation": "Documentación de Usuario",
+            "getHelp": "Consigue Ayuda Con Ghost",
+            "thePeople": "Los Que Lo Hicieron Posible",
+            "incredibleGroupOfContributors": "Ghost es construido por un grupo de contribuyentes de todas partes del mundo. Aquí están algunos de las personas que ayudaron a crear la versión que estas usando.",
+            "howToGetInvolved": "Averigua como involucrarte"
+        }
+    }
+}

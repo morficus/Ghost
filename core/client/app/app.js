@@ -15,7 +15,7 @@ var App = Ember.Application.extend({
 
         var language = navigator.language || navigator.browserLanguage;
         //TODO: need to figure out how to set this dynamically based on blog setting
-        this.intl.set('locales', ['es', 'hu-HU', 'en']);
+        this.intl.set('locales', ['es', 'en']);
 
     }
 });
