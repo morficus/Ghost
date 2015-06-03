@@ -288,7 +288,7 @@ Post = ghostBookshelf.Model.extend({
             validOptions = {
                 findAll: ['withRelated'],
                 findOne: ['importing', 'withRelated'],
-                findPage: ['page', 'limit', 'status', 'staticPages', 'featured'],
+                findPage: ['page', 'limit', 'status', 'staticPages', 'featured', 'title', 'fields'],
                 add: ['importing']
             };
 
@@ -374,7 +374,8 @@ Post = ghostBookshelf.Model.extend({
             limit: 15,
             staticPages: false, // include static pages
             status: 'published',
-            where: {}
+            where: {},
+            like: {}
         }, options);
 
         if (options.staticPages !== 'all') {
@@ -403,6 +404,12 @@ Post = ghostBookshelf.Model.extend({
 
         // Add related objects
         options.withRelated = _.union(options.withRelated, options.include);
+
+        // Do we need to filter/search by title?
+        // percent-signs are for wild-card searches
+        if (options.title) {
+            options.like.title = '%' + options.title + '%';
+        }
 
         // If a query param for a tag is attached
         // we need to fetch the tag model to find its id
@@ -436,6 +443,15 @@ Post = ghostBookshelf.Model.extend({
                 if (options.where) {
                     postCollection.query('where', options.where);
                 }
+
+                // If there are any `LIKE` conditions specified, add those to the query
+                if (!_.isEmpty(options.like)) {
+                    var keys = Object.keys(options.like);
+                    keys.forEach(function (key) {
+                        postCollection.query('where', key, 'LIKE', options.like[key]);
+                    });
+                }
+
                 // If we have a tag instance we need to modify our query.
                 // We need to ensure we only select posts that contain
                 // the tag given in the query param.
@@ -456,12 +472,16 @@ Post = ghostBookshelf.Model.extend({
                         .query('offset', options.limit * (options.page - 1));
                 }
 
+                if (!_.isEmpty(options.fields)) {
+                    options.columns = options.fields;
+                }
+
                 collectionPromise = postCollection
                     .query('orderBy', 'status', 'ASC')
                     .query('orderBy', 'published_at', 'DESC')
                     .query('orderBy', 'updated_at', 'DESC')
                     .query('orderBy', 'id', 'DESC')
-                    .fetch(_.omit(options, 'page', 'limit'));
+                    .fetch(_.omit(options, 'page', 'limit', 'fields'));
 
                 // Find the total number of posts
 
