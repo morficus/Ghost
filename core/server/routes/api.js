@@ -14,6 +14,7 @@ apiRoutes = function (middleware) {
 
     // ## Posts
     router.get('/posts', api.http(api.posts.browse));
+    router.get('/posts/search', api.http(api.posts.search));
     router.post('/posts', api.http(api.posts.add));
     router.get('/posts/:id', api.http(api.posts.read));
     router.get('/posts/slug/:slug', api.http(api.posts.read));
@@ -27,6 +28,7 @@ apiRoutes = function (middleware) {
 
     // ## Users
     router.get('/users', api.http(api.users.browse));
+    router.get('/users/search', api.http(api.users.search));
     router.get('/users/:id', api.http(api.users.read));
     router.get('/users/slug/:slug', api.http(api.users.read));
     router.get('/users/email/:email', api.http(api.users.read));
@@ -38,6 +40,7 @@ apiRoutes = function (middleware) {
 
     // ## Tags
     router.get('/tags', api.http(api.tags.browse));
+    router.get('/tags/search', api.http(api.tags.find));
     router.get('/tags/:id', api.http(api.tags.read));
     router.post('/tags', api.http(api.tags.add));
     router.put('/tags/:id', api.http(api.tags.edit));

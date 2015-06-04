@@ -91,6 +91,10 @@ users = {
         });
     },
 
+    search: function find(options) {
+        return dataProvider.User.search(options);
+    },
+
     /**
      * ### Read
      * @param {{id, context}} options

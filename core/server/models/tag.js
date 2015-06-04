@@ -76,7 +76,8 @@ Tag = ghostBookshelf.Model.extend({
             // whitelists for the `options` hash argument on methods, by method name.
             // these are the only options that can be passed to Bookshelf / Knex.
             validOptions = {
-                findPage: ['page', 'limit']
+                findPage: ['page', 'limit'],
+                search: ['limit', 'name']
             };
 
         if (validOptions[methodName]) {
@@ -182,6 +183,50 @@ Tag = ghostBookshelf.Model.extend({
         })
         .catch(errors.logAndThrowError);
     },
+
+    search: function (options) {
+        options = options || {};
+
+        var tagCollection = Tags.forge();
+
+        // Set default settings for options
+        options = _.extend({
+            limit: 5,
+            like: {}
+        }, options);
+
+        if (!_.isEmpty(options.fields)) {
+            if (!_.isArray(options.fields)) {
+                options.fields = [options.fields];
+            }
+            options.columns = _.union(['id', 'slug'], options.fields);
+        }
+
+        if (options.limit && options.limit !== 'all') {
+            options.limit = parseInt(options.limit, 10) || 5;
+            tagCollection
+                .query('limit', options.limit);
+        }
+
+        // Do we need to filter/search by title?
+        // percent-signs are for wild-card searches
+        if (options.name) {
+            options.like.name = '%' + options.name + '%';
+        }
+
+        // If there are any `LIKE` conditions specified, add those to the query
+        if (!_.isEmpty(options.like)) {
+            var keys = Object.keys(options.like);
+            keys.forEach(function (key) {
+                tagCollection.query('where', key, 'LIKE', options.like[key]);
+            });
+        }
+
+        console.log(options);
+
+        return tagCollection.fetch(_.omit(options, 'fields', 'limit'));
+    },
+
     destroy: function (options) {
         var id = options.id;
         options = this.filterOptions(options, 'destroy');

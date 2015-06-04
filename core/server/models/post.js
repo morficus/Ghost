@@ -287,6 +287,7 @@ Post = ghostBookshelf.Model.extend({
             // these are the only options that can be passed to Bookshelf / Knex.
             validOptions = {
                 findAll: ['withRelated'],
+                search: ['limit', 'fields', 'title', 'tag', 'author'],
                 findOne: ['importing', 'withRelated'],
                 findPage: ['page', 'limit', 'status', 'staticPages', 'featured', 'title', 'fields'],
                 add: ['importing']
@@ -330,6 +331,99 @@ Post = ghostBookshelf.Model.extend({
         // fetch relations passed to options.include
         options.withRelated = _.union(options.withRelated, options.include);
         return ghostBookshelf.Model.findAll.call(this, options);
+    },
+
+    search: function (options) {
+        options = options || {};
+
+        var postCollection = Posts.forge(),
+            tagInstance = options.tag !== undefined ? ghostBookshelf.model('Tag').forge() : false,
+            authorInstance = options.author !== undefined ? ghostBookshelf.model('User').forge({slug: options.author}) : false;
+
+        var myTag = options.tag;
+
+        options = this.filterOptions(options, 'search');
+
+        // Set default settings for options
+        options = _.extend({
+            limit: 5,
+            where: {},
+            like: {}
+        }, options);
+
+        if (!_.isEmpty(options.fields)) {
+            if (!_.isArray(options.fields)) {
+                options.fields = [options.fields];
+            }
+            options.columns = _.union(['id', 'slug'], options.fields);
+        }
+
+        if (options.limit && options.limit !== 'all') {
+            options.limit = parseInt(options.limit, 10) || 5;
+            postCollection
+                .query('limit', options.limit);
+        }
+
+        // Do we need to filter/search by title?
+        // percent-signs are for wild-card searches
+        if (options.title) {
+            options.like.title = '%' + options.title + '%';
+        }
+
+        // If there are any `LIKE` conditions specified, add those to the query
+        if (!_.isEmpty(options.like)) {
+            var keys = Object.keys(options.like);
+            keys.forEach(function (key) {
+                postCollection.query('where', key, 'LIKE', options.like[key]);
+            });
+        }
+
+        // If a query param for a tag is attached
+        // we need to fetch the tag model to find its id
+        function fetchTagQuery() {
+            if (tagInstance) {
+
+                tagInstance.query('where', 'name', 'LIKE', '%'+myTag+'%');
+                tagInstance.query('limit', 5);
+                return tagInstance.fetch(options)
+                    .then(function (x) {
+                        console.log(x);
+                        return x;
+                    });
+            }
+            return false;
+        }
+
+        function fetchAuthorQuery() {
+            if (authorInstance) {
+                return authorInstance.fetch()
+
+            }
+            return false;
+        }
+
+        return Promise.join(fetchTagQuery(), fetchAuthorQuery())
+            .then(function () {
+
+                // If we have a tag instance we need to modify our query.
+                // We need to ensure we only select posts that contain
+                // the tag given in the query param.
+                if (tagInstance) {
+
+                    postCollection
+                        .query('join', 'posts_tags', 'posts_tags.post_id', '=', 'posts.id')
+                        .query('where', 'posts_tags.tag_id', 'IN', tagInstance.id);
+                }
+
+                return postCollection
+                    .query('orderBy', 'status', 'ASC')
+                    .query('orderBy', 'published_at', 'DESC')
+                    .query('orderBy', 'updated_at', 'DESC')
+                    .query('orderBy', 'id', 'DESC')
+                    .fetch(_.omit(options, 'fields', 'limit'));
+            });
+
+
     },
 
     /**

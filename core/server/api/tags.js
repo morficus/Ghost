@@ -44,6 +44,10 @@ tags = {
         });
     },
 
+    search: function find(options) {
+        return dataProvider.Tag.search(options);
+    },
+
     /**
      * ### Read
      * @param {{id}} options

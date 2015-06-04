@@ -62,6 +62,10 @@ posts = {
         return dataProvider.Post.findPage(options);
     },
 
+    search: function find(options) {
+        return dataProvider.Post.search(options);
+    },
+
     /**
      * ### Read
      * Find a post, by ID, UUID, or Slug

@@ -175,6 +175,7 @@ User = ghostBookshelf.Model.extend({
             validOptions = {
                 findOne: ['withRelated', 'status'],
                 findAll: ['withRelated'],
+                search: ['limit', 'fields', 'term'],
                 setup: ['id'],
                 edit: ['withRelated', 'id'],
                 findPage: ['page', 'limit', 'status']
@@ -197,6 +198,51 @@ User = ghostBookshelf.Model.extend({
         options = options || {};
         options.withRelated = _.union(options.withRelated, options.include);
         return ghostBookshelf.Model.findAll.call(this, options);
+    },
+
+    search: function (options) {
+        var userCollection = Users.forge();
+
+        options = this.filterOptions(options, 'search');
+
+        // Set default settings for options
+        options = _.extend({
+            limit: 5,
+            where: {},
+            like: {}
+        }, options);
+
+        if (!_.isEmpty(options.fields)) {
+            if (!_.isArray(options.fields)) {
+                options.fields = [options.fields];
+            }
+            options.columns = _.union(['id', 'slug'], options.fields);
+        }
+
+        if (options.limit && options.limit !== 'all') {
+            options.limit = parseInt(options.limit, 10) || 5;
+            userCollection
+                .query('limit', options.limit);
+        }
+
+        // Search for a user where the given `term` matches their name, email or slug
+        // percent-signs are for wild-card searches
+        if (options.term) {
+            options.like.name = '%' + options.term + '%';
+            options.like.slug = '%' + options.term + '%';
+            options.like.email = '%' + options.term + '%';
+        }
+
+
+        // If there are any `LIKE` conditions specified, add those to the query
+        if (!_.isEmpty(options.like)) {
+            var keys = Object.keys(options.like);
+            keys.forEach(function (key) {
+                userCollection.query('orWhere', key, 'LIKE', options.like[key]);
+            });
+        }
+
+        return userCollection.fetch(_.omit(options, 'fields', 'limit', 'term'));
     },
 
     /**
