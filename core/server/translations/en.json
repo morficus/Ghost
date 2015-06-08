@@ -1,0 +1,89 @@
+{
+    "errors": {
+        "init": {
+            "jsNotBuilt": "Javascript files have not been built.",
+            "readInstructions": " Please read the getting started instructions at: {url}"
+        },
+        "httpServer": {
+            "addressInUse": {
+                "error": "(EADDRINUSE) Cannot start Ghost.",
+                "context" : "Port {port} is already in use by another program.",
+                "help": "Is another Ghost instance already running?"
+            },
+            "otherError": {
+                "error": "(Code: {errorNumber})",
+                "context" : "There was an error starting your server.",
+                "help": "Please use the error code above to search for a solution."
+            }
+        },
+        "nodeVersion": {
+            "unsupported": "\nERROR: Unsupported version of Node",
+            "needs": "\nGhost needs Node version",
+            "using": "you are using version",
+            "help": "\nPlease go to http://nodejs.org to get a supported version"
+        }
+    },
+    "warnings": {
+        "noAutoStartAsNpm": {
+            "warn": "Ghost no longer starts automatically when using it as an npm module.",
+            "context": "If you're seeing this message, you may need to update your custom code.",
+            "help": "Please see the docs at http://tinyurl.com/npm-upgrade for more information."
+        }
+    },
+    "notifications": {
+        "init": {
+            "welcome": "Welcome to Ghost. You're running under the <strong>{environment}</strong>. Your URL is set to {ghostUrl}. See <a href='{helpUrl}'>{helpUrl}</a> for instructions.",
+            "directEmailService": "Ghost is attempting to use a direct method to send e-mail. It is recommended that you explicitly configure an e-mail service. See {url} for instructions",
+            "unableToSendEmail": "Ghost is currently unable to send e-mail. See {url} for instructions."
+        },
+        "shutdown": {
+            "closingConnections": "Ghost is closing connections",
+            "offline": "\nYour blog is now offline",
+            "hasShutDown": "\nGhost has shut down",
+            "runningFor": "\nGhost was running for {time} seconds"
+        },
+        "startup": {
+            "ghostIsRunning": {
+                "running": "Ghost is running...",
+                "blogUrl": "\nYour blog is now available on {url}"
+            },
+            "ghostIsRunningInProc": {
+                "runningIn": "Ghost is running in {environment} ...",
+                "listeningOn": "\nListening on {address}. \nUrl configured as: {url}"
+            }
+        },
+        "shutdownCmd": "\nCtrl+C to shut down"
+    },
+    "emails": {
+        "welcome": [
+            "<strong>Hello!</strong>",
+            "Good news! You've successfully created a brand new Ghost blog over on {siteUrl}",
+            "You can log in to your admin account with the following details:",
+            "Email Address: {ownerEmail} <br> Password: The password you chose when you signed up",
+            "Keep this email somewhere safe for future reference, and have fun!",
+            "xoxo",
+            "Team Ghost<br> <a href='https://ghost.org'>https://ghost.org</a>"
+        ],
+        "invite-user": [
+            "Welcome",
+            "<strong>{blogName}</strong> is using Ghost to publish things on the internet! {invitedByName} has invited you to join. Please click on the link below to activate your account.",
+            "<a href='{resetLink}'>Click here to activate your account</a>",
+            "<strong>No idea what Ghost is?</strong> It's a simple, beautiful platform for running an online blog or publication. Writers, businesses and individuals from all over the world use Ghost to publish their stories and ideas. <a href='http://ghost.org'>Find out more</a>.",
+            "If you have trouble activating your {blogName} account, you can reach out to {invitedByName} on {invitedByEmail} for assistance.",
+            "Have fun, and good luck!"
+        ],
+        "reset-password": [
+            "<strong>Hello!</strong>",
+            "A request has been made to reset your password on <a href='{siteUrl}'>{siteUrl}</a>.",
+            "Please follow the link below to reset your password:<br><br> <a href='{resetUrl'>Click here to reset your password</a>",
+            "Ghost"
+        ],
+        "test": [
+            "<strong>Hello there!</strong>",
+            "Excellent! You've successfully setup your email config for your Ghost blog over on {siteUrl}",
+            "If you hadn't, you wouldn't be reading this email, but you are, so it looks like all is well :)",
+            "xoxo",
+            "Team Ghost<br> <a href='https://ghost.org'>https://ghost.org</a>"
+        ]
+    }
+}

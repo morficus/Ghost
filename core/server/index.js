@@ -10,6 +10,7 @@ var express     = require('express'),
     _           = require('lodash'),
     Promise     = require('bluebird'),
 
+    i18n        = require('./i18n'),
     api         = require('./api'),
     config      = require('./config'),
     errors      = require('./errors'),
@@ -27,20 +28,15 @@ var express     = require('express'),
     dbHash;
 
 function doFirstRun() {
-    var firstRunMessage = [
-        'Welcome to Ghost.',
-        'You\'re running under the <strong>',
-        process.env.NODE_ENV,
-        '</strong>environment.',
 
-        'Your URL is set to',
-        '<strong>' + config.url + '</strong>.',
-        'See <a href="http://support.ghost.org/" target="_blank">http://support.ghost.org</a> for instructions.'
-    ];
+    var firstRunMessage = i18n.t('notifications.init.welcome', {    environment: process.env.NODE_ENV,
+                                                                    ghostUrl:  config.url,
+                                                                    helpUrl: 'http://support.ghost.org'
+    });
 
     return api.notifications.add({notifications: [{
         type: 'info',
-        message: firstRunMessage.join(' ')
+        message: firstRunMessage
     }]}, {context: {internal: true}});
 }
 
@@ -80,9 +76,8 @@ function builtFilesExist() {
     }
 
     function checkExist(fileName) {
-        var errorMessage = 'Javascript files have not been built.',
-            errorHelp = '\nPlease read the getting started instructions at:' +
-                        '\nhttps://github.com/TryGhost/Ghost#getting-started';
+        var errorMessage = i18n.t('errors.init.jsNotBuilt'),
+            errorHelp = i18n.t('errors.init.readInstructions', {url: 'https://github.com/TryGhost/Ghost#getting-started'});
 
         return new Promise(function (resolve, reject) {
             fs.stat(fileName, function (statErr) {
@@ -114,23 +109,18 @@ function builtFilesExist() {
 // This is also a "one central repository" of adding startup notifications in case
 // in the future apps will want to hook into here
 function initNotifications() {
+    var mailLink = '<a href=\'http://support.ghost.org/mail\' target=\'_blank\'>http://support.ghost.org/mail</a>';
+
     if (mailer.state && mailer.state.usingDirect) {
         api.notifications.add({notifications: [{
             type: 'info',
-            message: [
-                'Ghost is attempting to use a direct method to send e-mail.',
-                'It is recommended that you explicitly configure an e-mail service.',
-                'See <a href=\'http://support.ghost.org/mail\' target=\'_blank\'>http://support.ghost.org/mail</a> for instructions'
-            ].join(' ')
+            message: i18n.t('notifications.init.directEmailService', {url: mailLink})
         }]}, {context: {internal: true}});
     }
     if (mailer.state && mailer.state.emailDisabled) {
         api.notifications.add({notifications: [{
             type: 'warn',
-            message: [
-                'Ghost is currently unable to send e-mail.',
-                'See <a href=\'http://support.ghost.org/mail\' target=\'_blank\'>http://support.ghost.org/mail</a> for instructions'
-            ].join(' ')
+            message: i18n.t('notifications.init.unableToSendEmail', {url: mailLink})
         }]}, {context: {internal: true}});
     }
 }
@@ -185,6 +175,9 @@ function init(options) {
         );
     }).then(function () {
         var adminHbs = hbs.create();
+
+        // Initialize Internationalization
+        i18n.init();
 
         // Output necessary notifications on init
         initNotifications();

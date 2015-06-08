@@ -6,7 +6,8 @@ var Promise = require('bluebird'),
     semver = require('semver'),
     packageInfo = require('../../package.json'),
     errors = require('./errors'),
-    config = require('./config');
+    config = require('./config'),
+    i18n   = require('./i18n');
 
 /**
  * ## GhostServer
@@ -62,15 +63,15 @@ GhostServer.prototype.start = function (externalApp) {
         self.httpServer.on('error', function (error) {
             if (error.errno === 'EADDRINUSE') {
                 errors.logError(
-                    '(EADDRINUSE) Cannot start Ghost.',
-                    'Port ' + config.server.port + ' is already in use by another program.',
-                    'Is another Ghost instance already running?'
+                    i18n.t('errors.httpServer.addressInUse.error'),
+                    i18n.t('errors.httpServer.addressInUse.context', {port: config.server.port}),
+                    i18n.t('errors.httpServer.addressInUse.help')
                 );
             } else {
                 errors.logError(
-                    '(Code: ' + error.errno + ')',
-                    'There was an error starting your server.',
-                    'Please use the error code above to search for a solution.'
+                    i18n.t('errors.httpServer.otherError.error', {errorNumber: error.errno}),
+                    i18n.t('errors.httpServer.otherError.context'),
+                    i18n.t('errors.httpServer.otherError.help')
                 );
             }
             process.exit(-1);
@@ -171,12 +172,12 @@ GhostServer.prototype.logStartMessages = function () {
     if (!semver.satisfies(process.versions.node, packageInfo.engines.node) &&
         !semver.satisfies(process.versions.node, packageInfo.engines.iojs)) {
         console.log(
-            chalk.red('\nERROR: Unsupported version of Node'),
-            chalk.red('\nGhost needs Node version'),
+            chalk.red(i18n.t('errors.nodeVersion.unsupported')),
+            chalk.red(i18n.t('errors.nodeVersion.needs')),
             chalk.yellow(packageInfo.engines.node),
-            chalk.red('you are using version'),
+            chalk.red(i18n.t('errors.nodeVersion.using')),
             chalk.yellow(process.versions.node),
-            chalk.green('\nPlease go to http://nodejs.org to get a supported version')
+            chalk.green(i18n.t('errors.nodeVersion.help'))
         );
 
         process.exit(0);
@@ -185,33 +186,27 @@ GhostServer.prototype.logStartMessages = function () {
     // Startup & Shutdown messages
     if (process.env.NODE_ENV === 'production') {
         console.log(
-            chalk.green('Ghost is running...'),
-            '\nYour blog is now available on',
-            config.url,
-            chalk.gray('\nCtrl+C to shut down')
+            chalk.green(i18n.t('notifications.startup.ghostIsRunning.running')),
+            i18n.t('notifications.startup.ghostIrRunning.blogUrl', {url: config.url}),
+            chalk.gray(i18n.t('notifications.shutdownCmd'))
         );
     } else {
         console.log(
-            chalk.green('Ghost is running in ' + process.env.NODE_ENV + '...'),
-            '\nListening on',
-                config.getSocket() || config.server.host + ':' + config.server.port,
-            '\nUrl configured as:',
-            config.url,
-            chalk.gray('\nCtrl+C to shut down')
+            chalk.green(i18n.t('notifications.startup.ghostIsRunningInProc.runningIn', {environment: process.env.NODE_ENV})),
+            i18n.t('notifications.startup.ghostIsRunningInProc.listeningOn', {address: config.getSocket() || config.server.host + ':' + config.server.port, url: config.url} ),
+            chalk.gray(i18n.t('notifications.shutdownCmd'))
         );
     }
 
     function shutdown() {
-        console.log(chalk.red('\nGhost has shut down'));
+        console.log(chalk.red(i18n.t('notifications.shutdown.hasShutDown')));
         if (process.env.NODE_ENV === 'production') {
             console.log(
-                '\nYour blog is now offline'
+                i18n.t('notifications.shutdown.offline')
             );
         } else {
             console.log(
-                '\nGhost was running for',
-                Math.round(process.uptime()),
-                'seconds'
+                i18n.t('notifications.shutdown.runningFor', {time: Math.round(process.uptime())})
             );
         }
         process.exit(0);
@@ -226,7 +221,7 @@ GhostServer.prototype.logStartMessages = function () {
  * ### Log Shutdown Messages
  */
 GhostServer.prototype.logShutdownMessages = function () {
-    console.log(chalk.red('Ghost is closing connections'));
+    console.log(chalk.red(i18n.t('notifications.shutdown.closingConnections')));
 };
 
 /**
@@ -237,9 +232,9 @@ GhostServer.prototype.logShutdownMessages = function () {
  */
 GhostServer.prototype.logUpgradeWarning = function () {
     errors.logWarn(
-        'Ghost no longer starts automatically when using it as an npm module.',
-        'If you\'re seeing this message, you may need to update your custom code.',
-        'Please see the docs at http://tinyurl.com/npm-upgrade for more information.'
+        i18n.t('warnings.noAutoStartAsNpm.warn'),
+        i18n.t('warnings.noAutoStartAsNpm.context'),
+        i18n.t('warnings.noAutoStartAsNpm.help')
     );
 };
 

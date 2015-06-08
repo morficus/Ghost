@@ -11,6 +11,7 @@ var _            = require('lodash'),
     fs           = require('fs'),
     templatesDir = path.resolve(__dirname, '..', 'email-templates'),
     htmlToText   = require('html-to-text'),
+    i18n        = require('../i18n'),
     mail;
 
 /**
@@ -93,13 +94,19 @@ mail = {
 
         // read the proper email body template
         return new Promise(function (resolve, reject) {
-            fs.readFile(templatesDir + '/' + options.template + '.html', {encoding: 'utf8'}, function (err, fileContent) {
+            fs.readFile(templatesDir + '/template.html', {encoding: 'utf8'}, function (err, fileContent) {
                 if (err) {
                     reject(err);
                 }
 
-                // insert user-specific data into the email
-                var htmlContent = _.template(fileContent, emailData),
+                var templateData = {
+                    // insert user-specific data into the translated strings
+                    paragraphs: i18n.t('emails.' + options.template, emailData),
+                    siteUrl: emailData.siteUrl
+                };
+
+                // place formatted string in to the email template
+                var htmlContent = _.template(fileContent, templateData),
                     textContent;
 
                 // generate a plain-text version of the same email
