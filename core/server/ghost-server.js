@@ -4,7 +4,8 @@ var Promise = require('bluebird'),
     chalk = require('chalk'),
     fs = require('fs'),
     errors = require('./errors'),
-    config = require('./config');
+    config = require('./config'),
+    i18n   = require('./i18n');
 
 /**
  * ## GhostServer
@@ -59,15 +60,15 @@ GhostServer.prototype.start = function (externalApp) {
         self.httpServer.on('error', function (error) {
             if (error.errno === 'EADDRINUSE') {
                 errors.logError(
-                    '(EADDRINUSE) Cannot start Ghost.',
-                    'Port ' + config.server.port + ' is already in use by another program.',
-                    'Is another Ghost instance already running?'
+                    i18n.t('errors.httpServer.addressInUse.error'),
+                    i18n.t('errors.httpServer.addressInUse.context', {port: config.server.port}),
+                    i18n.t('errors.httpServer.addressInUse.help')
                 );
             } else {
                 errors.logError(
-                    '(Code: ' + error.errno + ')',
-                    'There was an error starting your server.',
-                    'Please use the error code above to search for a solution.'
+                    i18n.t('errors.httpServer.otherError.error', {errorNumber: error.errno}),
+                    i18n.t('errors.httpServer.otherError.context'),
+                    i18n.t('errors.httpServer.otherError.help')
                 );
             }
             process.exit(-1);

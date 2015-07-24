@@ -3,7 +3,18 @@
 
     },
     "errors": {
-
+        "httpServer": {
+            "addressInUse": {
+                "error": "(EADDRINUSE) Cannot start Ghost.",
+                "context" : "Port {port} is already in use by another program.",
+                "help": "Is another Ghost instance already running?"
+            },
+            "otherError": {
+                "error": "(Code: {errorNumber})",
+                "context" : "There was an error starting your server.",
+                "help": "Please use the error code above to search for a solution."
+            }
+        }
     },
     "warnings": {
 
